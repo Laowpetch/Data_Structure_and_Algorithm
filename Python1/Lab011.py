@@ -1,0 +1,8 @@
+print("*** Rabbit & Turtle ***")
+d,Vr,Vt,Vf = input("Enter Input : ").split()
+d = int(d)
+Vr = int(Vr)
+Vt = int(Vt)
+Vf = int(Vf)
+a = (d/(Vt-Vr)*Vf)
+print("%.2f" % (a))
