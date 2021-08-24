@@ -8,9 +8,8 @@ for i in range(0,len(inp)):
                 temp[0] = inp[i]
                 temp[1] = inp[j]
                 temp[2] = inp[k]
-                if temp.sort == ans[len(ans)-1]:
-                    pass
-                else :
+                temp.sort()
+                if temp not in ans:
                     ans.append(temp.copy())
 if len(inp) > 2:
     print(ans)
