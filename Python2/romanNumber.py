@@ -1,5 +1,4 @@
 class translator:
-
     def deciToRoman(self, num):
         s = ""
         if num // 1000 >= 1:
@@ -54,7 +53,6 @@ class translator:
             for i in range(0,num // 1):
                 s += 'I'
                 num -= 1
-
         return s
     def romanToDeci(self, s):
         num = 0
