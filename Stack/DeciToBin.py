@@ -28,10 +28,8 @@ def dec2bin(decnum):
     for i in range(0,s.size()):
         ans += str(s.pop())
     return ans
+
 print(" ***Decimal to Binary use Stack***")
-
 token = input("Enter decimal number : ")
-
 print("Binary number : ",end='')
-
 print(dec2bin(int(token)))
