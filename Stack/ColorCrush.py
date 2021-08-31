@@ -18,9 +18,36 @@ class Stack:
 inp = input('Enter Input : ').split()
 S = Stack()
 
-### Enter Your Code Here ###
+def checkCrush (inp):
+    if len(inp) > 2:
+        try: 
+            for j in range(2,len(inp)):
+                if inp[j-2] == inp[j-1] == inp[j]:
+                    inp.pop(j-2)
+                    inp.pop(j-2)
+                    inp.pop(j-2)
+                    global num
+                    num += 1
+                    checkCrush(inp)
+            return inp
+        except IndexError:
+            return inp
+    else:
+        return inp
+num = 0
+inp = checkCrush(inp)
 
+for i in range(0,len(inp)):
+    S.push(inp[i])
 print(S.size())
+inp = ""
+for i in range(0,S.size()):
+    inp += str(S.pop())
 
-### Enter Your Code Here ###
+if inp != "":
+    print(inp)
+else:
+    print('Empty')
 
+if num > 1 :
+    print('Combo :',num,"! ! !")
