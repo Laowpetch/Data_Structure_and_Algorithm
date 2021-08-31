@@ -1,7 +1,4 @@
 class Stack:
-    """class Stack
-    default : empty stack / Stack([...})
-    """
     def __init__(self,list=None):
         if list == None:
             self.items = []
@@ -17,11 +14,6 @@ class Stack:
         return self.items == []
     def size(self):
         return len(self.items)
-    def __str__(self):
-        s = 'stack of'+str(self.size())+'items : '
-        for ele in self.items:
-            s += str(ele)+''
-        return s
 
 def match(open,close):
     return (open == '(' and close == ')') or (open == '[' and close == ']') or (open == '{' and close == '}')
@@ -47,18 +39,18 @@ def parenMacthing(str):
                 else:
                     error = 2
         i+=1
-    if s.size()>0:
+    if s.size()>0 and error != 1:
         error = 3
     return error,c,i,s
 
-str = '[{a+b+c}'
+str = input("Enter expresion : ")
 err,c,i,s = parenMacthing(str)
 if err == 1:
-    print(str,'unmatch open - close')
+    print(str,'Unmatch open-close')
 elif err == 2:
     print(str,'close paren excess')
 elif err == 3:
-    print(str,'open paren(s) excess ',s.size(),':',end="")
+    print(str,'open paren excess  ',s.size(),': ',end="")
     for ele in s.items:
         print(ele,sep='',end="")
     print()
