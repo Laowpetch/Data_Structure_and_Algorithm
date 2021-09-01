@@ -65,17 +65,20 @@ sizen = len(n)
 while mRun == True or nRun == True or First == True:
     if First == True or mRun == True:
         for i in range(sizem-1,-1,-1): #Mirror Explosion
-            if m[i] == m[i-1] == m[i-2]:
-                mItem = m[i]
-                m.pop(i-2)
-                m.pop(i-2)
-                m.pop(i-2)
-                mPoint += 1
-                sizem -= 3
-                Setback1 = True
-                mRun = True
-                break
-            else:
+            try:
+                if m[i] == m[i-1] == m[i-2]:
+                    mItem = m[i]
+                    m.pop(i-2)
+                    m.pop(i-2)
+                    m.pop(i-2)
+                    mPoint += 1
+                    sizem -= 3
+                    Setback1 = True
+                    mRun = True
+                    break
+                else:
+                    pass
+            except IndexError:
                 pass
     if Setback1 == True:
         Setback1 = False
@@ -88,16 +91,19 @@ while mRun == True or nRun == True or First == True:
         mItem = ''
     if First == True or nRun == True:
         for i in range(2,sizen): #Normal Explosion
-            if n[i] == n[i-1] == n[i-2]: 
-                n.pop(i-2)
-                n.pop(i-2)
-                n.pop(i-2)
-                nPoint += 1
-                sizen -= 3
-                nRun = True
-                Setback2 = True
-                break
-            else:
+            try :
+                if n[i] == n[i-1] == n[i-2]: 
+                    n.pop(i-2)
+                    n.pop(i-2)
+                    n.pop(i-2)
+                    nPoint += 1
+                    sizen -= 3
+                    nRun = True
+                    Setback2 = True
+                    break
+                else:
+                    pass
+            except IndexError:
                 pass
     if Setback2 == True:
         Setback2 = False
