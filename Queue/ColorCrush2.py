@@ -44,9 +44,8 @@ class Stack:
     def size(self):
         return len(self.items)
 
-
 N = Stack()
-M = Stack()
+M = Queue()
 mPoint = 0
 nPoint = 0
 mItem = ''
@@ -55,6 +54,7 @@ nRun = False
 Setback1 = False
 Setback2 = False
 First = True
+insert = 2
 
 n,m = input('Enter Input (Normal, Mirror) : ').split()
 n = list(n)
@@ -62,12 +62,11 @@ m = list(m)
 sizem = len(m)
 sizen = len(n)
 
-while mRun == True or nRun == True or First == True:
-    if First == True or mRun == True:
-        for i in range(sizem-1,-1,-1): #Mirror Explosion
+while mRun == True or First == True:
+    for i in range(sizem-1,-1,-1): #Mirror Explosion
             try:
                 if m[i] == m[i-1] == m[i-2]:
-                    mItem = m[i]
+                    mItem += m[i]
                     m.pop(i-2)
                     m.pop(i-2)
                     m.pop(i-2)
@@ -75,22 +74,27 @@ while mRun == True or nRun == True or First == True:
                     sizem -= 3
                     Setback1 = True
                     mRun = True
-                    break
                 else:
                     pass
             except IndexError:
                 pass
+    if First == True:
+        First = False
     if Setback1 == True:
+        mRun = True
         Setback1 = False
     else:
         mRun = False
 
-    if mItem != '':
-        n.insert(2,mItem)
-        sizen = len(n)
-        mItem = ''
-    if First == True or nRun == True:
-        for i in range(2,sizen): #Normal Explosion
+mItem = list(mItem)
+while mItem != []:
+    n.insert(insert,mItem[0])
+    mItem.pop(0)
+    insert += 4
+
+First = True
+while nRun == True or First == True:
+    for i in range(2,sizen): #Normal Explosion
             try :
                 if n[i] == n[i-1] == n[i-2]: 
                     n.pop(i-2)
@@ -105,29 +109,31 @@ while mRun == True or nRun == True or First == True:
                     pass
             except IndexError:
                 pass
-    if Setback2 == True:
-        Setback2 = False
-    else:
-        nRun = False
     if First == True:
         First = False
-for i in range(0,sizem):
-    M.push(m[i])
-for i in range(0,sizen):
+    if Setback2 == True:
+        Setback2 = False
+        nRun = True
+    else:
+        nRun = False
+
+for i in range(0,len(m)):
+    M.enqueue(m[i])
+for i in range(0,len(n)):
     N.push(n[i])
 print('NORMAL :')
-print(sizen)
+print(len(n))
 for i in range(0,N.size()):
     print(N.pop(),end='')
 print()
 print(str(nPoint)+' Explosive(s) ! ! ! (NORMAL)')
 print('------------MIRROR------------')
 print(': RORRIM')
-print(sizem)
-if sizem == 0:
+print(len(m))
+if len(m) == 0:
     print('ytpmE')
 else:
     for i in range(0,M.size()):
-        print(M.push(),end='')
+        print(M.dequeue(),end='')
     print()
 print('(RORRIM) ! ! ! (s)evisolpxE '+str(mPoint))
