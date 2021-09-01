@@ -34,6 +34,7 @@ def checkCrush (inp):
             return inp
     else:
         return inp
+
 num = 0
 inp = checkCrush(inp)
 
