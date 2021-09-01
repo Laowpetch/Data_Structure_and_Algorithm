@@ -18,11 +18,6 @@ class Stack:
 def match(open,close):
     return (open == '(' and close == ')') or (open == '[' and close == ']') or (open == '{' and close == '}')
 
-def mathch2(ops,cl):
-    opens = '([{'
-    closes = ')]}'
-    return opens.index(ops)==closes.index(cl)
-
 def parenMacthing(str):
     s = Stack()
     i = 0
