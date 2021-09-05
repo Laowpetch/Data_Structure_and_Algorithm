@@ -2,9 +2,6 @@ class Queue :
     def __init__(self) -> None:
         self.data = []
 
-    def __str__(self) -> str:
-        return str(self.data)
-
     def is_empty(self):
         return len(self.data) == 0
 
@@ -21,119 +18,82 @@ class Queue :
 
     def size(self):
         return len(self.data)
+    
+    def __str__(self):
+        res = ''
+        for i in self.data:
+            res += i
+        return res
+    def Bastr(self):
+        res = ''
+        for i in self.data:
+            res = i + res
+        return res
 
-class Stack:
-    def __init__(self,list=None):
-        if list == None:
-            self.items = []
-        else:
-            self.items = list
+mirItem = Queue()
+normQ = Queue()
+mirrQ = Queue()
+Run = True
+Interrupt = False
+norm,mirr = input('Enter Input (Normal, Mirror) : ').split()
+norm = list(norm)
+mirr = list(mirr)
+normS = len(norm)
+mirrS = len(mirr)
+mirrC = 0
+normC = 0
+failedC = 0
 
-    def push(self,i):
-        self.items.append(i)
+while mirrS > 2 and Run == True:
+    for i in range(mirrS-1,-1,-1):
+        if mirr[i] == mirr[i-1] == mirr[i-2]:
+            mirItem.enqueue(mirr[i])
+            mirr.pop(i-2)
+            mirr.pop(i-2)
+            mirr.pop(i-2)
+            mirrS -= 3
+            mirrC += 1
+            break
+        if i == 0:
+            Run = False
+Run = True
 
-    def pop(self):
-        return self.items.pop()
-
-    def peek(self):
-        return self.items[-1]
-
-    def isEmpty(self):
-        return self.items == []
-
-    def size(self):
-        return len(self.items)
-
-N = Stack()
-M = Queue()
-mPoint = 0
-nPoint = 0
-mItem = ''
-mRun = False
-nRun = False
-Setback1 = False
-Setback2 = False
-First = True
-insert = 2
-
-n,m = input('Enter Input (Normal, Mirror) : ').split()
-n = list(n)
-m = list(m)
-sizem = len(m)
-sizen = len(n)
-
-while mRun == True or First == True:
-    for i in range(sizem-1,-1,-1): #Mirror Explosion
-            try:
-                if m[i] == m[i-1] == m[i-2]:
-                    mItem += m[i]
-                    m.pop(i-2)
-                    m.pop(i-2)
-                    m.pop(i-2)
-                    mPoint += 1
-                    sizem -= 3
-                    Setback1 = True
-                    mRun = True
+while normS > 2 and Run == True:
+    for i in range(0,normS-2):
+        if norm[i] == norm[i+1] == norm[i+2] :
+            if mirItem.size() > 0:
+                norm.insert(i+2,mirItem.dequeue())
+                normS += 1
+                Interrupt = True
+            if norm[i] == norm[i+1] == norm[i+2] :
+                norm.pop(i)
+                norm.pop(i)
+                norm.pop(i)
+                normS -= 3
+                if Interrupt == True:
+                    failedC += 1
                 else:
-                    pass
-            except IndexError:
-                pass
-    if First == True:
-        First = False
-    if Setback1 == True:
-        mRun = True
-        Setback1 = False
-    else:
-        mRun = False
+                    normC += 1
+            Interrupt = False
+            break
+        if i == normS - 3:
+            Run = False
 
-mItem = list(mItem)
-while mItem != []:
-    n.insert(insert,mItem[0])
-    mItem.pop(0)
-    insert += 4
-
-First = True
-while nRun == True or First == True:
-    for i in range(2,sizen): #Normal Explosion
-            try :
-                if n[i] == n[i-1] == n[i-2]: 
-                    n.pop(i-2)
-                    n.pop(i-2)
-                    n.pop(i-2)
-                    nPoint += 1
-                    sizen -= 3
-                    nRun = True
-                    Setback2 = True
-                    break
-                else:
-                    pass
-            except IndexError:
-                pass
-    if First == True:
-        First = False
-    if Setback2 == True:
-        Setback2 = False
-        nRun = True
-    else:
-        nRun = False
-
-for i in range(0,len(m)):
-    M.enqueue(m[i])
-for i in range(0,len(n)):
-    N.push(n[i])
+if normS > 0:
+    for i in norm:
+        normQ.enqueue(i)
+if mirrS > 0:
+    for i in mirr:
+        mirrQ.enqueue(i)
+        
 print('NORMAL :')
-print(len(n))
-for i in range(0,N.size()):
-    print(N.pop(),end='')
-print()
-print(str(nPoint)+' Explosive(s) ! ! ! (NORMAL)')
+print(normS)
+print(normQ.Bastr() if normS > 0 else 'Empty')
+print(normC,'Explosive(s) ! ! ! (NORMAL)')
+if failedC > 0 :
+    print('Failed Interrupted',failedC,'Bomb(s)')
 print('------------MIRROR------------')
 print(': RORRIM')
-print(len(m))
-if len(m) == 0:
-    print('ytpmE')
-else:
-    for i in range(0,M.size()):
-        print(M.dequeue(),end='')
-    print()
-print('(RORRIM) ! ! ! (s)evisolpxE '+str(mPoint))
+print(mirrS)
+print(mirrQ if mirrS > 0 else 'ytpmE')
+print('(RORRIM) ! ! ! (s)evisolpxE',mirrC)
