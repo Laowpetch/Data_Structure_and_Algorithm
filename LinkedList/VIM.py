@@ -132,26 +132,22 @@ class LinkedList:
             p.next = q
             q.previous = p
             return 'Success'
-            
+
 L = LinkedList()
 inp = input('Enter Input : ').split(',')
+cur = 0
 for i in inp:
-    if i[:2] == "AP":
-        L.append(i[3:])
-    elif i[:2] == "AH":
-        L.addHead(i[3:])
-    elif i[:2] == "SE":
-        print("{0} {1} in {2}".format(L.search(i[3:]), i[3:], L))
-    elif i[:2] == "SI":
-        print("Linked List size = {0} : {1}".format(L.size(), L))
-    elif i[:2] == "ID":
-        print("Index ({0}) = {1} : {2}".format(i[3:], L.index(i[3:]), L))
-    elif i[:2] == "PO":
-        before = "{}".format(L)
-        k = L.pop(int(i[3:]))
-        print(("{0} | {1}-> {2}".format(k, before, L)) if k == "Success" else ("{0} | {1}".format(k, L)))
-    elif i[:2] == "IS":
-        data = i[3:].split()
-        L.insert(int(data[0]), data[1])
-print("Linked List :", L)
-print("Linked List Reverse :", L.reverse())
+    if i[0] == 'I':
+        L.insert(cur,i[2:])
+        cur += 1
+    if i[0] == 'L' and cur > 0:
+        cur -= 1
+    if i[0] == 'R' and cur < L.size():
+        cur += 1
+    if i[0] == 'B' and cur > 0:
+        L.pop(cur-1)
+        cur -= 1
+    if i[0] == 'D' and cur < L.size():
+        L.pop(cur)
+L.insert(cur,'|')
+print(L)
