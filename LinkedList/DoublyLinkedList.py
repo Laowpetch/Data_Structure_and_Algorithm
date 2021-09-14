@@ -1,3 +1,4 @@
+import math
 class Node:
     def __init__(self, value):
         self.value = value
@@ -21,7 +22,7 @@ class LinkedList:
     def reverse(self):
         if self.isEmpty():
             return "Empty"
-        cur, s = self.tail, str(self.tail.value) + " "
+        cur, s = self.nodeAt(self.size()-1), str(self.nodeAt(self.size()-1).value) + " "
         while cur.previous != None:
             s += str(cur.previous.value) + " "
             cur = cur.previous
@@ -31,33 +32,104 @@ class LinkedList:
         return self.head == None
 
     def append(self, item):
-        #Code Here
-        pass
+        if self.head == None :
+            self.head = Node(item)
+        else :
+            self.insert(self.size(),item)
 
     def addHead(self, item):
-        #Code Here
-        pass
+        if self.head == None:
+            self.head = Node(item)
+        else:
+            self.insert(0,item)
+    def nodeAt(self,i) :
+        p = self.head
+        for j in range(0,i) :
+            p = p.next
+        return p
 
     def insert(self, pos, item):
-        #Code Here
-        pass
+        if self.head == None:
+            self.head = Node(item)
+        elif pos >= 0:
+            if pos == 0:
+                x = Node(item)
+                x.next = self.nodeAt(0)
+                self.head = x
+                x.next.previous = x
+            elif pos == self.size():
+                x = Node(item)
+                p = self.nodeAt(self.size()-1)
+                p.next = x
+                x.previous = p
+            elif pos < self.size():
+                p = self.nodeAt(pos).previous
+                q = self.nodeAt(pos)
+                x = Node(item)
+                p.next = x
+                q.previous = x
+                x.next = q
+                x.previous = p
+            else:
+                self.insert(self.size(),item)
+        else:
+            if abs(pos)<=self.size():
+                self.insert(self.size()+pos,item)
+            elif True:
+                self.insert(0,item)
 
     def search(self, item):
-        #Code Here
-        pass
+        if self.isEmpty():
+            return 'Not Found'
+        buffer = self.nodeAt(0)
+        for i in range(0,self.size()):
+            if str(buffer.value) == str(item):
+                return 'Found'
+            buffer = buffer.next
+        return 'Not Found'
 
     def index(self, item):
-        #Code Here
-        pass
+        buffer = self.head
+        count = 0
+        while buffer is not None:
+            if buffer.value == item:
+                return count
+            count += 1
+            buffer = buffer.next
+        return -1
 
     def size(self):
-        #Code Here
-        pass
+        buffer = self.head
+        count = 0
+        while buffer is not None:
+            count += 1
+            buffer = buffer.next
+        return count
 
     def pop(self, pos):
-        #Code Here
-        pass
-
+        if self.size() == 1 and pos == 0:
+            self.head = None
+            return 'Success'
+        elif self.size() == 0:
+            return 'Out of Range'
+        elif pos < 0 and abs(pos)>self.size()-1:
+            return 'Out of Range'    
+        elif pos < 0:
+            self.pop(self.size()-1+pos)
+        elif pos > self.size()-1:
+            return 'Out of Range'
+        elif pos == self.size-1 and self.size()>1:
+            x = self.nodeAt(self.size-2)
+            x.next = None
+            return 'Success'
+        else:
+            x = self.nodeAt(pos)
+            p = x.previous
+            q = x.next
+            p.next = q
+            q.previous = p
+            return 'Success'
+            
 L = LinkedList()
 inp = input('Enter Input : ').split(',')
 for i in inp:
