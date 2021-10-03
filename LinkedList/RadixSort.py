@@ -11,7 +11,7 @@ class LinkedList:
 
     def __str__(self):
         if self.isEmpty():
-            return "Empty"
+            return ""
         cur, s = self.head, str(self.head.value) + " "
         while cur.next != None:
             s += str(cur.next.value) + " "
@@ -31,10 +31,27 @@ class LinkedList:
         return self.head == None
 
     def append(self, item):
-        if self.head == None :
-            self.head = Node(item)
-        else :
-            self.insert(self.size(),item)
+        #if self.head == None :
+        #    self.head = Node(item)
+        #else :
+        #    self.insert(self.size(),item)
+        curr = self.head
+        n = Node(item)
+        if curr is None:
+            self.head = n
+            return
+
+        if curr.value > item:
+            n.next = curr
+            self.head = n
+            return
+
+        while curr.next is not None:
+            if curr.value < item and curr.next.value > item:
+                break
+            curr = curr.next
+        n.next = curr.next
+        curr.next = n
 
     def addHead(self, item):
         if self.head == None:
@@ -133,3 +150,38 @@ class LinkedList:
             return 'Success'
             
 inp = input('Enter Input : ').split()
+bef = []
+li = []
+num = [LinkedList(),LinkedList(),LinkedList(),LinkedList(),LinkedList(),LinkedList(),LinkedList(),LinkedList(),LinkedList(),LinkedList()]
+digit = 0
+size = len(inp)
+keep = False
+while num[0].size() != size:
+    digit += 1
+    for i in inp:
+        if not keep:
+            bef.append(i)
+        temp = int(i)
+        if temp < 0:
+            temp *= -1
+            temp = int(((temp - (int(i)*-1) % (pow(10,digit-1)))/pow(10,digit-1))%10)
+        else:
+            temp = int(((temp - int(i) % (pow(10,digit-1)))/pow(10,digit-1))%10)
+        num[temp].append(int(i))
+        if temp == 0:
+            li.append(i)
+    keep = True
+    for i in li:
+        inp.remove(i)
+    li = []
+    print('------------------------------------------------------------')
+    print('Round :',str(digit))
+    print('0 :',num[0])
+    for i in range(1,len(num)):
+        print(i,':',num[i])
+        num[i] = LinkedList()
+
+print('------------------------------------------------------------')
+print(str(digit-1),'Time(s)')
+print('Before Radix Sort :',' -> '.join(bef))
+print('After  Radix Sort :',' -> '.join(str(num[0]).split()))
