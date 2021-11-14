@@ -17,6 +17,7 @@ def duplicate(inp):
         return False
     else:
         return True
+        
 def samenumber(inp):
     check = True
     for i in range(1,len(inp)):
