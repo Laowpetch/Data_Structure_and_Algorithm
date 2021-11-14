@@ -16,6 +16,6 @@ def selection(list_, right=None):
         print('swap',list_[max_],'<->',list_[right],':',list_)
     return selection(list_, right-1)
 
-in_lst = list(map(int, input("Enter Input : ").split()))
-ans = selection(in_lst)
-print(in_lst)
+inp = list(map(int, input("Enter Input : ").split()))
+ans = selection(inp)
+print(ans)
