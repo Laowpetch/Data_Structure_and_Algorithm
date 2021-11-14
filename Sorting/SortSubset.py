@@ -1,19 +1,36 @@
-def GetSubsets(li, Sum):
-    listSubset = []
-    def CheckSum(buffer, n, Sum):
-        nonlocal listSubset
-        if n >= len(li):
-            return
-        if int(Sum) - int(li[n]) == 0:
-            listSubset.append(buffer)
-        if n < len(li) - 1:
-            CheckSum(buffer[0:-1] + [li[n + 1]], n + 1, Sum)
-            CheckSum(buffer + [li[n + 1]], n + 1, int(Sum) - int(li[n]))
-    CheckSum([li[0]],0,Sum)
-    return listSubset
+def Bubble(li):
+    for i in range(len(li)-1):
+        for j in range(len(li)-1-i):
+            if li[j] > li[j+1]:
+                li[j], li[j+1] = li[j+1], li[j]
+    return li
 
-sum,li = input('Enter Input : ').split('/')
-li = [i for i in li.split()]
-li = GetSubsets(li,sum)
-for i in li:
-    print(i)
+def Subset(num, li, left=0, ans=[], temp=[]):
+    if left >= len(li):
+        return ans
+    temp.append(li[left])
+    if sum(temp) == num:
+        ans.append(temp.copy())
+    ans = Subset(num, li, left+1, ans, temp)
+    temp.pop()
+    ans = Subset(num, li, left+1, ans, temp)
+    return ans
+
+def SortSize(li):
+    for i in range(len(li)-1):
+        for j in range(len(li)-i-1):
+            if len(li[j]) > len(li[j+1]):
+                li[j], li[j+1] = li[j+1], li[j]
+    return li
+
+num,inp = input("Enter Input : ").split('/')
+num = int(num)
+inp = list(map(int, inp.split()))
+inp = Bubble(inp)
+ans = Subset(num, inp)
+if len(ans) == 0:
+    print("No Subset")
+else:
+    ans = SortSize(ans)
+    for i in ans:
+        print(i)
