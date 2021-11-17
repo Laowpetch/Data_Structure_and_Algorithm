@@ -1,4 +1,4 @@
-def first_greater_value(list_, value_):
+def firstGreaterValue(list_, value_):
     list_ = sorted(list_)
     for i in list_:
         if i > value_:
@@ -8,4 +8,4 @@ def first_greater_value(list_, value_):
 inp = input("Enter Input : ").split('/')
 list_, value_ = list(map(int, inp[0].split())), list(map(int, inp[1].split()))
 for i in value_:
-    print(first_greater_value(list_, i))
+    print(firstGreaterValue(list_, i))
