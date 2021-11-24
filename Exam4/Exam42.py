@@ -63,3 +63,44 @@ class AVL:
 	    if not root:
 		    return 0
 	    return self.getHeight(root.left) - self.getHeight(root.right)
+
+    def preorder_(self):
+        print('preorder  -->',' '.join([str(e) for e in self.preorder(self.root,[])])  )
+
+    def inorder_(self):
+        print('in_order  -->',' '.join([str(e) for e in self.inorder(self.root,[])])  )
+
+    def postorder_(self):
+        print('postorder -->',' '.join([str(e) for e in self.postorder(self.root,[])])  )
+    
+    def preorder(self,node,li):
+        if node:
+            li.append(node.data)
+            self.preorder(node.left,li)
+            self.preorder(node.right,li)
+        return li
+
+    def inorder(self,node,li):
+        if node:
+            self.inorder(node.left,li)
+            li.append(node.data)
+            self.inorder(node.right,li)
+        return li
+        
+    def postorder(self,node,li):
+        if node:
+            self.postorder(node.left,li)
+            self.postorder(node.right,li)
+            li.append(node.data)
+        return li
+  
+Tree = AVL() 
+root = None
+print(" *** AVL Tree ***")
+data = input("Enter some numbers : ").split()
+for e in data:
+    root = Tree.insert(root, int(e))
+Tree.root = root
+Tree.inorder_()
+Tree.preorder_()
+Tree.postorder_()
