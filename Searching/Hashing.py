@@ -4,7 +4,7 @@ class Data:
         self.value = data
     def __str__(self):
         return "({0}, {1})".format(self.key, self.value)
-class hash:
+class Hash:
     def __init__(self,data,table):
         data = data.split()
         self.data = Data(data[0],data[1])
@@ -20,7 +20,7 @@ s = input('Enter Input : ').split('/')
 table ,maxCol ,empt = int(s[0].split()[0]),int(s[0].split()[1]),int(s[0].split()[0])
 list_ = [None]*table
 for i in s[1].split(','):
-    hash_ = hash(i,table)
+    hash_ = Hash(i,table)
     id = hash_.id
     colNum = 1
     while list_[id] is not None and colNum <= maxCol:
