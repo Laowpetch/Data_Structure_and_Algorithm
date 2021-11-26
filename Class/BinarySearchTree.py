@@ -7,7 +7,7 @@ class Node:
     def __str__(self):
         return str(self.data)
 
-class BST:
+class Tree:
     def __init__(self):
         self.root = None
 
