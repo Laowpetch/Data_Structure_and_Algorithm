@@ -18,9 +18,7 @@ class BST:
             Rootnode=self.root
             while True:
                 if node.data >= Rootnode.data:
-
                     if Rootnode.right is None :
-
                         Rootnode.right = node
                         break
                     Rootnode = Rootnode.right
